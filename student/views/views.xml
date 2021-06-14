@@ -13,9 +13,7 @@
                     <field name="student_gender"/>
                     <field name="student_age"/>
                     <field name="student_dob"/>
-                    <field name="student_blood_group"/>
-                    <field name="student_contactno"/>
-                    <field name="student_address"/>
+
                     <field name="student_email"/>
                 </tree>
             </field>
