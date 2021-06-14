@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- Form View    -->
+    <record id="view_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form>
+                    <header>
+                        <field name="state" widget="statusbar" options="{'clickable': '1' }" statusbar_visible ="draft,done,confirm"/>
+                    </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="age"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--Form View-->
+
+    <!-- Search View    -->
+    <record id="view_patient_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="name"/>
+                <field name="note"/>
+                <separator/>
+                <filter string="Male" name="male" domain="[('gender', '=', 'male')]"/>
+                <filter string="FeMale" name="female" domain="[('gender', '=', 'female')]"/>
+                <filter string="Others" name="other" domain="[('gender', '=', 'other')]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Gender" name="gender" context="{'group_by':'gender'}"/>
+                    <filter string="Patient Name" name="patient_name" context="{'group_by':'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <!--Search View-->
+
+    <!-- Tree View    -->
+    <record id="view_patient_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.tree</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="note"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <!--Tree View-->
+
+    <!-- Kanban View -->
+
+    <record id="view_patient_kanban" model="ir.ui.view">
+        <field name="name">hospital.patient.kanban</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="id"></field>
+                <field name="name"></field>
+                <field name="gender"></field>
+                <field name="age"></field>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div>
+                                <span class="o_kanban_record_title">
+                                    <strong>
+                                        <i class="oe_highlight">
+                                            <t t-esc="record.name.value"/>
+                                        </i>
+                                    </strong>
+                                </span>
+                                <div class="oe_kanban_tags_section"/>
+                                <ul>
+                                    <li>Name :
+                                        <field name="name"/>
+                                    </li>
+                                    <li>Gender :
+                                        <field name="gender"/>
+                                    </li>
+                                    <li>Age :
+                                        <field name="age"/>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <!--Kanban View    -->
+
+
+    <!-- Action details    -->
+    <record id="patient_action" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                create your first patient!
+            </p>
+        </field>
+    </record>
+
+    <!-- Action Details     -->
+
+    <!--    Menu Details -->
+
+    <menuitem id="hospital_root"
+              name="Hospital"
+              sequence="10"/>
+
+    <menuitem id="hospital_patient_root"
+              name="Patients"
+              parent="hospital_root"
+              sequence="10"/>
+
+    <menuitem id="hospital_patient"
+              name="Out Patients"
+              parent="hospital_patient_root"
+              action="patient_action"
+              sequence="10"/>
+
+    <!--    Mendu Details -->
+
+</odoo>
