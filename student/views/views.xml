@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_student_tree" model="ir.ui.view">
+            <field name="name">student.student.tree</field>
+            <field name="model">student.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <tree string="Student">
+                    <field name="name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <field name="student_gender"/>
+                    <field name="student_age"/>
+                    <field name="student_dob"/>
+                    <field name="student_blood_group"/>
+                    <field name="student_contactno"/>
+                    <field name="student_address"/>
+                    <field name="student_email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_student_search" model="ir.ui.view">
+            <field name="name">student.student.search</field>
+            <field name="model">student.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <search string="Student">
+                    <field name="name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <field name="student_gender"/>
+                    <field name="student_age"/>
+                    <field name="student_dob"/>
+                    <field name="student_blood_group"/>
+                    <field name="student_contactno"/>
+                    <field name="student_address"/>
+                    <field name="student_email"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="view_student_form" model="ir.ui.view">
+            <field name="name">student.student.form</field>
+            <field name="model">student.student</field>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <form string="Student">
+                    <sheet>
+                        <field name="photo" widget="image" class="oe_left oe_avatar"/>
+                        <div class="oe_title">
+                            <h1>
+                                <table>
+                                    <tr>
+                                        <td style="padding-right:10px;">
+                                            <field name="name" required="1" placeholder="First Name"/>
+                                        </td>
+                                        <td style="padding-right:10px;">
+                                            <field name="middle_name" placeholder="Middle Name"/>
+                                        </td>
+                                        <td style="padding-right:10px;">
+                                            <field name="last_name" placeholder="Last Name"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </h1>
+                        </div>
+                        <notebook colspan="4">
+                            <page name="personal_information"
+                                  string="Personal Information">
+                                <group col="4" colspan="4"
+                                       name="personal_detail">
+                                    <field name="student_age"/>
+                                    <field name="student_dob"/>
+                                    <field name="student_gender"/>
+                                    <field name="student_blood_group"/>
+                                    <field name="nationality"/>
+                                    <field name="student_address"/>
+                                    <field name="student_contactno"/>
+                                    <field name="student_email"/>
+                                    <field name="student_active"/>
+                                    <field name="student_information"/>
+                                    <field name="student_fees"/>
+                                    <field name="language" widget="many2many_tags"/>  <!--  Many2many tags-->
+                                    <!--                                    <field name="language"/>-->
+                                    <!--                                    <field name="currency"/>-->
+                                    <field name="currency"/>        <!--  Many2many default-->
+                                    <field name="partner"/>
+                                    <!--                                    <field name="user"/>-->
+                                    <field name="attendee_ids" widget="many2many_checkboxes"/> <!--  Many2many checkbox-->
+
+                                    <field name="user" widget="many2many_kanban">
+                                        <kanban>
+                                            <field name="name"/>
+                                            <templates>
+                                                <t t-name="kanban-box">
+                                                    <field name="name"/>
+                                                </t>
+                                            </templates>
+                                        </kanban>
+                                    </field>
+
+                                </group>
+                                <!--                                <label for="attendee_ids"/>-->
+                                <!--                                <field name="attendee_ids" widget="many2many_tags"/>-->
+                                <!--<field name="student_vehicles" widget="many2many_tags"/>-->
+
+                            </page>
+                        </notebook>
+                         <notebook>
+                            <page string="Child Data">
+                                <!-- you can display child data like code below -->
+                                <field name="rel_id" widget="one2many_list" nolabel="1">
+                                    <tree string="Values" create="1" editable="bottom">
+                                     <field name="allied_partner"/>
+                                    <field name="desc"/>
+                                </tree>
+                            </field>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_view_students">
+            <field name="name">Students</field>
+            <field name="res_model">student.student</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create new student
+                </p>
+            </field>
+        </record>
+
+        <!--      <menuitem id="menu_school" name="School"  groups="group_school_manager"/>
+              <menuitem id="school_student" name="Students" parent="menu_school"  groups="group_school_manager"
+                        action="action_view_students"/>-->
+
+
+        <!-- Course Detail Menu -->
+
+        <!-- top level menu : no parent -->
+        <menuitem id="main_school_menu" name="School"
+                  groups="group_school_manager"/>
+
+        <!-- A first level in the left side menu is needed before using action attribute -->
+        <menuitem id="school_menu" name="School"
+                  groups="group_school_manager"
+                  parent="main_school_menu"/>
+
+        <!-- the following menuitem should appear "after" its parent openacademy menu and "after" its action course list action -->
+
+        <menuitem id="student_menu" name="Student Details" parent="school_menu"
+                  groups="group_school_manager"
+                  action="action_view_students"/>
+
+
+    </data>
+</odoo>
